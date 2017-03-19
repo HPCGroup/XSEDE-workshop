@@ -1,0 +1,568 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% beamer %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% To run - pdflatex filename.tex
+%	   acroread filename.pdf
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% include packages
+
+
+\documentclass[compress,10pt]{beamer}
+
+\mode<presentation>
+
+\usetheme{Dresden}
+
+% other themes: AnnArbor, Antibes, Bergen, Berkeley, Berlin, Boadilla, boxes, CambridgeUS, Copenhagen, Darmstadt, default, Dresden, Frankfurt, Goettingen,
+% Hannover, Ilmenau, JuanLesPins, Luebeck, Madrid, Maloe, Marburg, Montpellier, PaloAlto, Pittsburg, Rochester, Singapore, Szeged, Warsaw classic
+
+%\usecolortheme{lily}
+% color themes: albatross, beaver, beetle, crane, default, dolphin, dov, fly, lily, orchid, rose, seagull, seahorse, sidebartab, structure, whale, wolverine
+
+%\usefonttheme{serif}
+% font themes: default, professionalfonts, serif, structurebold, structureitalicserif, structuresmallcapsserif
+
+\hypersetup{pdfpagemode=FullScreen} % makes your presentation go automatically to full screen
+
+% define your own colors:
+\definecolor{Red}{rgb}{1,0,0}
+\definecolor{Blue}{rgb}{0,0,1}
+\definecolor{Green}{rgb}{0,1,0}
+\definecolor{magenta}{rgb}{1,0,.6}
+\definecolor{lightblue}{rgb}{0,.5,1}
+\definecolor{lightpurple}{rgb}{.6,.4,1}
+\definecolor{gold}{rgb}{.6,.5,0}
+\definecolor{orange}{rgb}{1,0.4,0}
+\definecolor{hotpink}{rgb}{1,0,0.5}
+\definecolor{newcolor2}{rgb}{.5,.3,.5}
+\definecolor{newcolor}{rgb}{0,.3,1}
+\definecolor{newcolor3}{rgb}{1,0,.35}
+\definecolor{darkgreen1}{rgb}{0, .35, 0}
+\definecolor{darkblue}{rgb}{0,0,.50}
+\definecolor{darkgreen}{rgb}{0, .6, 0}
+\definecolor{darkred}{rgb}{.75,0,0}
+
+\xdefinecolor{olive}{cmyk}{0.64,0,0.95,0.4}
+\xdefinecolor{purpleish}{cmyk}{0.75,0.75,0,0}
+
+\setbeamerfont{normal text}{size=\tiny}
+%\setbeamerfont{framesubtitle}{size=\Large}
+%\setbeamercolor{section in head/foot}{fg=white, bg=darkblue}
+%\setbeamercolor{framesubtitle}{fg=darkblue, bg=white}
+
+% can also choose different themes for the "inside" and "outside"
+
+% \usepackage{beamerinnertheme_______}
+% inner themes include circles, default, inmargin, rectangles, rounded
+
+% \usepackage{beamerouterthemesmoothbars}
+% outer themes include default, infolines, miniframes, shadow, sidebar, smoothbars, smoothtree, split, tree
+
+%\useoutertheme[subsection=false]{smoothbars}
+
+% to have the same footer on all slides
+%\setbeamertemplate{footline}[text line]{STUFF HERE!}
+%\setbeamertemplate{footline}[text line]{} % makes the footer EMPTY
+
+\makeatother
+\setbeamertemplate{frametitle continuation}{[\insertcontinuationcount]}
+\setbeamertemplate{headline}[5]{}
+\setbeamertemplate{footline}
+{
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.4\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+    \usebeamerfont{author in head/foot}\insertshortauthor
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.6\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+    \usebeamerfont{title in head/foot}\insertshorttitle\hspace*{3em}
+    
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+\makeatletter
+
+
+\usepackage{url}
+\usepackage{algorithmicx}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage[sharp]{easylist}
+\usepackage{tikz}
+
+\newcommand{\teta}[1][]{\ensuremath{\theta_{#1}}}
+\newcommand{\Jtheta}{\ensuremath{J\left(\teta[1],\dots,\teta[n]\right)}}
+\makeatletter
+\@ifclassloaded{beamer} {\renewcommand{\ALG@beginalgorithmic}{\scriptsize}}
+%{\@ifclassloaded{beamer} {\algrenewcommand{\alglinenumber}[1]{\scriptsize}}
+\makeatother 
+%\renewcommand{\ALG@beginalgorithmic}{\small}} { } }
+
+\makeatletter
+% This is the vertical rule that is inserted
+\def\therule{\makebox[\algorithmicindent][l]{\hspace*{.5em}\vrule height .75\baselineskip depth .25\baselineskip}}%
+
+\newtoks\therules% Contains rules
+\therules={}% Start with empty token list
+\def\appendto#1#2{\expandafter#1\expandafter{\the#1#2}}% Append to token list
+\def\gobblefirst#1{% Remove (first) from token list
+  #1\expandafter\expandafter\expandafter{\expandafter\@gobble\the#1}}%
+\def\LState{\State\unskip\the\therules}% New line-state
+\def\LStatex{\Statex\unskip\the\therules}% New line-state
+\def\pushindent{\appendto\therules\therule}%
+\def\popindent{\gobblefirst\therules}%
+\def\printindent{\unskip\the\therules}%
+\def\printandpush{\printindent\pushindent}%
+\def\popandprint{\popindent\printindent}%
+
+%      ***      DECLARED LOOPS      ***
+% (from algpseudocode.sty)
+\algdef{SE}[WHILE]{While}{EndWhile}[1]
+  {\printandpush\algorithmicwhile\ #1\ \algorithmicdo}
+  {\popandprint\algorithmicend\ \algorithmicwhile}%
+\algdef{SE}[FOR]{For}{EndFor}[1]
+  {\printandpush\algorithmicfor\ #1\ \algorithmicdo}
+  {\popandprint\algorithmicend\ \algorithmicfor}%
+\algdef{S}[FOR]{ForAll}[1]
+  {\printindent\algorithmicforall\ #1\ \algorithmicdo}%
+\algdef{SE}[LOOP]{Loop}{EndLoop}
+  {\printandpush\algorithmicloop}
+  {\popandprint\algorithmicend\ \algorithmicloop}%
+\algdef{SE}[REPEAT]{Repeat}{Until}
+  {\printandpush\algorithmicrepeat}[1]
+  {\popandprint\algorithmicuntil\ #1}%
+\algdef{SE}[IF]{If}{EndIf}[1]
+  {\printandpush\algorithmicif\ #1\ \algorithmicthen}
+  {\popandprint\algorithmicend\ \algorithmicif}%
+\algdef{C}[IF]{IF}{ElsIf}[1]
+  {\popandprint\pushindent\algorithmicelse\ \algorithmicif\ #1\ \algorithmicthen}%
+\algdef{Ce}[ELSE]{IF}{Else}{EndIf}
+  {\popandprint\pushindent\algorithmicelse}%
+\algdef{SE}[PROCEDURE]{Procedure}{EndProcedure}[2]
+   {\printandpush\algorithmicprocedure\ \textproc{#1}\ifthenelse{\equal{#2}{}}{}{(#2)}}%
+   {\popandprint\algorithmicend\ \algorithmicprocedure}%
+\algdef{SE}[FUNCTION]{Function}{EndFunction}[2]
+   {\printandpush\algorithmicfunction\ \textproc{#1}\ifthenelse{\equal{#2}{}}{}{(#2)}}%
+   {\popandprint\algorithmicend\ \algorithmicfunction}%
+
+\makeatother
+
+\graphicspath{ {images/} }
+
+\usepackage{subfigure}
+\usepackage{multicol}
+\usepackage[backend=bibtex]{biblatex}
+%\bibliographystyle{unsrt}
+%\bibliography{all}
+%\bibliography{all}
+%\addbibresource{prez.bib}
+%\usepackage{epsfig}
+%\usepackage{graphicx}
+%\usepackage[all,knot]{xy}
+%\xyoption{arc}
+%\usepackage{multimedia}
+%\usepackage{hyperref}
+
+%\beamerdefaultoverlayspecification{<+->}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Title Page Info %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setbeamercolor{title}{fg=white,bg=darkblue} 
+\title[XSEDE]{XSEDE \\ e\textbf{X}treme \textbf{S}cience and \textbf{E}ngineering \textbf{D}iscovery \textbf{E}nvironment }
+
+\subtitle[]{}
+\author[Armando Fandango]{\textbf{Armando Fandango}\\UCF Campus Student Champion for XSEDE\\\textbf{Dr. Paul Wiegand}\\UCF Campus Champion for XSEDE}
+\institute[University of Central Florida]{Advanced Research Computing Center \\ University of Central Florida }
+\date{}
+
+\footnotetext[3]{Visulation is a portmanteau describing a coupled system where graphic visualization and computer simulation occur simultaneously} 
+%\titlegraphic{\includegraphics[width=0.5\textwidth]{hubble_25_anniversary.jpg}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Begin Your Document %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\frame[plain]{
+	\titlepage 
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\frame[plain]{\frametitle{Contents}
+\tableofcontents
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\section{Prologue}
+%\frame{\tableofcontents[currentsection]}
+
+
+\section{Introduction}
+
+\begin{frame}{What is XSEDE?}
+\pause
+\centering
+ from \url{www.XSEDE.org}
+ 
+\begin{itemize}
+\item XSEDE is the most advanced, powerful and robust collection of integrated digital resources and services in the world.
+\item It is a single virtual computing system that scientists can use to interactively share resources, data and expertise.
+\end{itemize}
+
+\bigskip
+\pause
+According to what we know:
+\bigskip
+\pause
+
+In nutshell, XSEDE is portal or gateway to \textbf{16} Supercomputer/HPC/HTC resources for Scientific Computing and Scientific Visualization, funded by US Agencies such as NSF, and available to US Researchers and Faculty. 
+\bigskip
+\bigskip
+
+
+
+
+\end{frame}
+\begin{frame}{What Resources are these ?}
+from www.xsede.org/web/guest/resources/overview
+\begin{itemize}
+\item Compute Resources
+\begin{itemize}
+
+\item TACC: Stampede (XeonPhi)[102400 cores], Wrangler, Jetstream
+\item PSC: Greenfield, Bridges Larg mem and Regular mem
+\item SDSC: Gordon, Gordon ION. Comet [47616 cores]
+\item LSU: SuperMIC 
+\item NIC: Darter (Cray XC30) [23168 cores]
+\item IU: Mason
+\end{itemize}
+
+\pause
+
+\item Visualization Resources
+
+\begin{itemize}
+\item TACC: Maverick (NVIDIA GPGPU) [132 nodes, 2640 cores]
+\end{itemize}
+
+\pause
+
+\item Storage Resources
+
+\begin{itemize}
+\item TACC: Ranch, Wrangler, XWFS, Jetstream
+\item NICS: HPSS
+\item PSC: Data Supercell, Bridges Pylon
+\item SDSC: Data OASIS
+\end{itemize}
+
+\pause
+
+\item HTC Resources
+
+\begin{itemize}
+\item USC: Open Science Grid - Consortium of 100+ Grids
+\end{itemize}
+
+\end{itemize}
+
+\end{frame}
+
+
+\section{Allocation}
+
+
+
+\begin{frame}{I want one !!!!!! how ?}
+\begin{itemize}
+\pause
+\item Create an account on XSEDE User Portal :  \url{portal.xsede.org/}
+\pause
+\item Write a startup, education or research allocation request - more on next slide
+\pause
+\item Apply for an allocation: \url{portal.xsede.org/submit-request/}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{What are the allocation types? and \\What do I need to write a request?}
+\begin{itemize}
+\pause
+\item Startup 
+\begin{itemize}
+\pause
+\item Apply with a CV and Abstract
+\pause
+\item Limited to some resources - check on XSEDE portal
+\pause
+\item Apply any time of the year
+
+\end{itemize}
+\pause
+\item Education
+\begin{itemize}
+\pause
+\item Apply with a CV, abstract, syllabus, student project info - simple
+\pause
+\item Limited to some resources, Apply any time of the year
+\end{itemize}
+\pause
+\item Research
+\begin{itemize}
+\pause
+\item Application process more involved
+\pause
+\item Summarize research in context of the current state of the art
+\pause
+\item Outline computational algorithms and their use in research
+\pause
+\item Justify need of computational resources - reviewers generally look for weak spots to reduce
+\pause
+\item Report results from previous research (XSEDE/non-XSEDE) - papers, benchmarks, code etc.
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{I am a grad student.. Can I apply for allocation?}
+\pause
+
+Sorry... No.
+\bigskip
+\pause
+Only a PI can submit an allocation proposal.
+
+\bigskip
+  
+\begin{itemize}
+\pause
+\item Who can NOT be a PI
+\pause
+         \begin{itemize}
+           \item students : high school, undergrad or grad (There are exceptions)
+           
+         \end{itemize}
+ 
+ \pause
+    \item Who can be a PI
+      \begin{itemize}
+      \pause
+        \item A researcher or educator at a U.S. academic or non-profit research institution
+        \pause
+        \item A post-doctoral researcher
+        \pause
+        \item NSF Grad Student Fellows
+        \pause
+        \item A high school/K-12 Educator (education allocation)
+      \end{itemize}
+      
+     
+ 
+    \bigskip
+    \pause
+    Checkout \url{www.xsede.org} for current policies and rules
+ 
+  
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Can I get more than one allocation?}
+\begin{itemize}
+\pause
+ \item An individual may be a PI on only one active XSEDE allocation request at a given time
+  \begin{itemize}
+  \pause
+  \item Combine your multiple projects into one request
+  \end{itemize}
+  \pause
+  \item There are exceptions :-)
+  \pause
+  \begin{itemize}
+  \item A research request can be submitted even if you have active startup allocation
+  \pause
+  \item A research request in entirely different field of science can be submitted even if you have an active research allocation,\\
+  \item XSEDE Reviewers decide if its entirely different field of research.
+  \pause
+  \item Any number of educational requests can be made.
+  \end{itemize}
+  
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{How are XSEDE resources tracked?}
+\begin{itemize}
+\pause
+\item Compute Resources
+\begin{itemize}
+\pause
+\item Compute resources are allocated and used in terms of \textbf{SU}
+\item SU stands for Service Units
+\item 1 SU = 1 processor-core-hour
+
+\pause
+\item However some sites have more complex formulae that include factors such as queue priority.
+\end{itemize}
+
+\pause
+\item Storage Resources
+\begin{itemize}
+\item Storage resources are allocated and used in terms of GB
+\item GB stands for GigaBytes
+\end{itemize}
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Tell me more about allocation...}
+\begin{itemize}
+\pause
+
+  \item Allocation is for 12 month period
+\pause
+  \item Any unused SUs are forfeited at the end of 12 month period
+  \pause
+  \item Allocation can be requested for renewal
+  \pause
+  \item Startup allocation is not renewed. Go for research allocation after consuming your startup allocation.
+  \pause
+  \item PIs ask their team members to register their own free account on XSEDE and add them to allocation.
+  \pause
+  \item Additional resources for an allocation may be requested through a Supplement Request
+
+ \end{itemize}
+\end{frame}
+
+
+
+
+
+
+\begin{frame}{Can I transfer SUs from one cluster to another ?}
+\begin{itemize}
+\item SUs can be transferred from one facility to another
+\item However transferred SUs are based on a formula derived from HPL benchmark performances
+\item Use SU Conversion Calculator : \url{www.xsede.org/web/guest/su-converter}
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{So what software is available on these resources?}
+
+\begin{itemize}
+\pause
+\item You can search here: \url{https://portal.xsede.org/software\#/} \newline [Demo] 
+\pause
+\item You need to check each and individual sites for:
+\begin{itemize}
+ \item What software is available and under which license?
+ \item Can we install our own software and/or license?
+\end{itemize}
+
+\pause
+\item Most of the sites use SLURM or TORQUE/MOAB
+\begin{itemize}
+ \item You may need to modify submission scripts and/or code
+\end{itemize}
+
+\pause
+\item You can transfer large data using GridFTP/Globus
+\begin{itemize}
+ \item Transfer directly from one site to another site
+ \item Single Sign On among other benefits
+ \item Checkout for more info: \url{www.xsede.org/web/guest/data-transfers}
+\pause
+\item Stokes at ARCC UCF has GridFTP Capability, you can move large data to/from XSEDE clusters over High Speed Research Network - To Be Announced Soon
+\end{itemize}
+
+\end{itemize}
+\end{frame}
+
+\section{Prologue}
+
+\begin{frame}{What are other XSEDE-like National Resources?}
+\begin{itemize}
+
+\pause
+\item National Center for Supercomputing Applications (NCSA)
+\begin{itemize}
+\item NCSA Blue Waters 
+\item 22,640 Cray XE6 nodes with 64 GB RAM and 4,228 Cray XK7 nodes with 32GB RAM, all with NVIDIA GPGPU
+\item Lustre based Online Storage of 24+ PB with 1 TB/s r/w rate
+\item www.ncsa.illinois.edu
+\end{itemize}
+
+\pause
+\item Dept. of Energy: Advanced Scientific Computing Research (ASCR)
+\begin{itemize}
+\item \url{science.energy.gov/ascr/}
+\end{itemize}
+
+\pause
+\item National Energy Research Scientific Computing Center (NERSC)
+\begin{itemize}
+\item\url{www.nersc.gov/users/computational-systems/}
+\end{itemize}
+
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Whom do I contact at UCF regarding XSEDE?}
+\begin{itemize}
+\item Go to \url{www.xsede.org} first :-)
+\pause
+\item If you cant find what you need then get in touch with us
+\bigskip
+\item Dr. Paul Wiegand : wiegand@ist.ucf.edu
+\item UCF Campus Champion for XSEDE
+\bigskip
+\item Armando Fandango: armando@ucf.edu
+\item UCF Campus Student Champion for XSEDE
+\end{itemize}
+
+\end{frame}
+
+
+
+\begin{frame}{Thank you and future directions}
+\begin{itemize}
+\item Would you like more detail about ...?
+\begin{itemize}
+\item XSEDE Science Gateways
+\item Writing XSEDE Research Requests
+\item SLURM on XSEDE (and Stokes) :-)
+\item ..... Please write on the sheet being circulated
+\end{itemize}
+\pause
+\item Thank you for your time and attention
+\end{itemize}
+
+
+
+\end{frame}
+
+\begin{frame}[plain]
+\begin{center}
+\color{darkblue}
+\huge
+Thank You\\
+\bigskip
+\end{center} 
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% End Your Document %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
+

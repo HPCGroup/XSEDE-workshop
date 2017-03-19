@@ -1,0 +1,13 @@
+*.DS_Store
+*.aux
+*.log
+*.nav
+*.out
+*.snm
+*.gz
+*.bak
+*.toc
+*.vrb
+
+prez.run.xml
+prez-blx.bib
